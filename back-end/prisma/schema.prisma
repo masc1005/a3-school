@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator ERD {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  name     String
+  cpf      String  @unique @db.VarChar(11)
+  password String
+  academic Boolean
+
+  moduleId Int?
+  schoolId Int?
+  classId  Int?
+
+  role Role @default(ADMIN)
+
+  School School? @relation(fields: [schoolId], references: [id])
+  Module Module? @relation(fields: [moduleId], references: [id])
+  Class  Class?  @relation(fields: [classId], references: [id])
+
+  Grade Grade[]
+}
+
+model School {
+  id      Int    @id @default(autoincrement())
+  name    String
+  cnpj    String @unique @db.VarChar(14)
+  address String
+  phone   String
+  email   String @unique
+
+  module Module[]
+  uer    User[]
+  Class  Class[]
+  Grade  Grade[]
+}
+
+model Class {
+  id       Int    @id @default(autoincrement())
+  name     String
+  schoolId Int?
+  moduleId Int?
+
+  School School? @relation(fields: [schoolId], references: [id])
+  Module Module? @relation(fields: [moduleId], references: [id])
+
+  User User[]
+}
+
+model Grade {
+  id       Int    @id @default(autoincrement())
+  name     String
+  grade    Float
+  schoolId Int
+  moduleId Int
+  userId   Int
+
+  School School @relation(fields: [schoolId], references: [id])
+  Module Module @relation(fields: [moduleId], references: [id])
+  User   User   @relation(fields: [userId], references: [id])
+}
+
+model Module {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  schoolId Int
+  school   School @relation(fields: [schoolId], references: [id])
+
+  user  User[]
+  Class Class[]
+  Grade Grade[]
+}
+
+enum Role {
+  PROFESSOR
+  STUDENT
+  ADMIN
+}
