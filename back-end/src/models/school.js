@@ -19,7 +19,7 @@ class School {
   async readOne(id) {
     const school = await prisma.school.findUnique({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
@@ -45,7 +45,7 @@ class School {
   async update(id, data) {
     const school = await prisma.school.update({
       where: {
-        id,
+        id: parseInt(id),
       },
       data: {
         ...data,
@@ -58,7 +58,7 @@ class School {
   async delete(id) {
     const school = await prisma.school.delete({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 

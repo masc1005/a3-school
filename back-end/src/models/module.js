@@ -6,7 +6,7 @@ class Module {
     const module = await prisma.module.create({
       data: {
         name,
-        schoolId,
+        schoolId: parseInt(schoolId),
       },
     });
 
@@ -16,7 +16,7 @@ class Module {
   async readOne(id) {
     const module = await prisma.module.findUnique({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
@@ -26,7 +26,7 @@ class Module {
   async readMany(schoolId) {
     const modules = await prisma.module.findMany({
       where: {
-        schoolId,
+        schoolId: parseInt(schoolId),
       },
     });
 
@@ -37,7 +37,7 @@ class Module {
     const { name } = data;
     const module = await prisma.module.update({
       where: {
-        id,
+        id: parseInt(id),
       },
       data: {
         name,
@@ -50,7 +50,7 @@ class Module {
   async delete(id) {
     const module = await prisma.module.delete({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 

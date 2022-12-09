@@ -15,16 +15,21 @@ class Classes {
   }
 
   async readOne(id) {
-    const classes = await prisma.class.findUnique({
+    const classes = await prisma.class.findFirst({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
     return classes;
   }
 
   async readMany() {
-    const classes = await prisma.class.findMany();
+    const classes = await prisma.class.findMany({
+      include: {
+        School: true,
+        Module: true,
+      },
+    });
     return classes;
   }
 
@@ -43,7 +48,7 @@ class Classes {
   async delete(id) {
     const classes = await prisma.class.delete({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
     return classes;

@@ -13,10 +13,10 @@ class Student {
         academic: false,
         role: "STUDENT",
         moduleId: 1,
-        schoolId,
+        schoolId: parseInt(schoolId),
         Class: {
           connect: {
-            id: classId,
+            id: parseInt(classId),
           },
         },
       },
@@ -31,7 +31,7 @@ class Student {
         role: "STUDENT",
         Class: {
           some: {
-            id: classId,
+            id: parseInt(classId),
           },
         },
       },
@@ -42,7 +42,7 @@ class Student {
   async readOne(id) {
     const student = await prisma.user.findUnique({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
     return student;
@@ -60,7 +60,7 @@ class Student {
   async update(id, data) {
     const student = await prisma.user.update({
       where: {
-        id,
+        id: parseInt(id),
       },
       data: {
         ...data,
@@ -74,7 +74,7 @@ class Student {
 
     const student = await prisma.user.update({
       where: {
-        id,
+        id: parseInt(id),
       },
       data: {
         password,
@@ -86,7 +86,7 @@ class Student {
   async delete(id) {
     const student = await prisma.user.delete({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
     return student;

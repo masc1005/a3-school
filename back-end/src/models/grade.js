@@ -16,10 +16,14 @@ class Grade {
     return grades;
   }
 
-  async readOne(id) {
+  async readOne(schoolId, moduleId, userId) {
     const grades = await prisma.grade.findUnique({
       where: {
-        id,
+        schoolId_moduleId_userId: {
+          schoolId: parseInt(schoolId),
+          moduleId: parseInt(moduleId),
+          userId: parseInt(userId),
+        },
       },
     });
     return grades;
@@ -45,7 +49,7 @@ class Grade {
   async delete(id) {
     const grades = await prisma.grade.delete({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
     return grades;

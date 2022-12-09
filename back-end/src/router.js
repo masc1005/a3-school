@@ -1,5 +1,8 @@
 const { Router } = require("express");
 
+const { authMiddleware } = require("./middleware/auth");
+
+const { login } = require("./controllers/auth");
 const StudentController = require("./controllers/student");
 const ProfessorController = require("./controllers/professor");
 const ModuleController = require("./controllers/module");
@@ -14,6 +17,15 @@ const grade = new GradeController();
 
 const router = Router();
 
+// hello world
+router.get("/", (req, res) => {
+  res.send({ message: "Hello World!" });
+});
+
+// Auth
+router.post("/login", login);
+
+router.use(authMiddleware);
 // Student
 router.post("/student", student.create);
 router.get("/student/:id", student.readOne);
@@ -32,7 +44,7 @@ router.delete("/professor/:id", professor.delete);
 router.post("/module", moduleController.create);
 router.get("/module/:id", moduleController.readOne);
 router.get("/module", moduleController.readMany);
-router.put("/module/:id", moduleController.update);
+router.put("/modules/:id", moduleController.update);
 router.delete("/module/:id", moduleController.delete);
 
 // Class

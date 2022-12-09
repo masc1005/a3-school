@@ -12,9 +12,9 @@ class Professor {
         password,
         academic: true,
         role: "PROFESSOR",
-        classId,
-        moduleId,
-        schoolId,
+        classId: parseInt(classId),
+        moduleId: parseInt(moduleId),
+        schoolId: parseInt(schoolId),
       },
     });
     return professor;
@@ -23,7 +23,7 @@ class Professor {
   async readOne(id) {
     const professor = await prisma.user.findUnique({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
     return professor;
@@ -43,7 +43,7 @@ class Professor {
       where: {
         academic: true,
         role: "PROFESSOR",
-        schoolId,
+        schoolId: parseInt(schoolId),
       },
     });
     return professors;
@@ -52,7 +52,7 @@ class Professor {
   async update(id, data) {
     const professor = await prisma.user.update({
       where: {
-        id,
+        id: parseInt(id),
       },
       data: {
         ...data,
@@ -64,7 +64,7 @@ class Professor {
   async delete(id) {
     const professor = await prisma.user.delete({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
     return professor;

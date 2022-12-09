@@ -69,6 +69,8 @@ model Grade {
   School School @relation(fields: [schoolId], references: [id])
   Module Module @relation(fields: [moduleId], references: [id])
   User   User   @relation(fields: [userId], references: [id])
+
+  @@unique([schoolId, moduleId, userId])
 }
 
 model Module {
